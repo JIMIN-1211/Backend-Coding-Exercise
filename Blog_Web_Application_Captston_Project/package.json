@@ -1,6 +1,7 @@
 {
   "name": "blog_web_application_captston_project",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -10,11 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.3",
     "ejs": "^3.1.10",
-    "express": "^4.21.2",
-    "nodemon": "^3.1.9"
-  },
-  "devDependencies": {},
-  "description": ""
+    "express": "^4.21.2"
+  }
 }
