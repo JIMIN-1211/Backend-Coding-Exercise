@@ -9,10 +9,10 @@
             <h2><%= post.title %></h2>
             <p><%= post.content %></p>
             <form action="/edit" method="get">
-                <input type="submit" value="✏️">
+                <input type="hidden" name="id" value="<%= post.id %>"><input type="submit" value="✏️">
             </form>
             <form action="/delete" method="DELETE">
-                <inputp type="submit" value="❌">
+                <input type="hidden" name="id" value="<%= post.id %>"><inputp type="submit" value="❌">
             </form>
         </div>
             

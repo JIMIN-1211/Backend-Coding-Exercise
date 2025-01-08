@@ -20,9 +20,11 @@ app.get("/home", (req, res)=>{
 
 app.post("/home", (req, res)=>{
     posts.push({
+        id : posts.length,
         title: req.body.title,
         content : req.body.content,
     });
+    console.log(posts);
     res.render("home.ejs", {
         posts : posts,
     });
@@ -33,16 +35,23 @@ app.get("/newPost", (req, res)=>{
 });
 
 app.get("/edit", (req, res)=>{
-    console.log(req.body);
-    res.redirect("/home");
-})
+    var editId = req.query.id;
 
-// app.patch("/home", (req, res)=>{
-//     res.render("home.ejs", {
-//         name : req.body.name,
-//         posts : posts,
-//     });
-// })
+    res.render("edit.ejs", {
+        post : posts[editId],
+    });
+});
+
+app.patch("/home", (req, res)=>{
+    posts[req.query.id].title = req.body.title;
+    posts[req.query.id].content = req.body.content;
+
+    res.render("home.ejs", {
+        posts : posts,
+    });
+
+    console.log(posts);
+});
 
 app.listen(port, ()=>{
     console.log(`Listening on port ${port}`);

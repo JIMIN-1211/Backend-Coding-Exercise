@@ -3,9 +3,10 @@
 <div class="post">
     <form action="/home" method="Patch">
         <p>title</p>
-        <input type="text" value="<%= post.title %>">
+        <input type="text" name="title" value="<%= post.title %>">
         <p>content</p>
-        <input type="text" value="<%= post.content %>">
+        <input type="text" name="content" value="<%= post.content %>">
+        <input type="hidden" name="id" value="<%= post.id %>">
         <input type="submit" value="MODIFY">
     </form>
 </div>
