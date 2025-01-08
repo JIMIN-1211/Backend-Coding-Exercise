@@ -1,0 +1,13 @@
+<%- include('./partials/header.ejs') %>
+
+<div class="post">
+    <form action="/home" method="Patch">
+        <p>title</p>
+        <input type="text" value="<%= post.title %>">
+        <p>content</p>
+        <input type="text" value="<%= post.content %>">
+        <input type="submit" value="MODIFY">
+    </form>
+</div>
+
+<%- include('./partials/footer.ejs') %>
