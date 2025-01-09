@@ -53,13 +53,18 @@ app.post("/edit/:id", (req, res)=>{
 });
 
 app.post("/delete/:id", (req, res)=>{
-    var deleteId = req.params.id;
-    posts.splice(deleteId, 1);
-    console.log(posts);
-    console.log("delete successfully");
-    res.render("home.ejs", {
-        posts : posts,
-    });
+    var deleteId = parseInt(req.params.id);
+    const postIndex = posts.findIndex(post=>post.id === deleteId);
+
+    if(postIndex !== -1){
+        posts.splice(postIndex, 1);
+        console.log(posts);
+        console.log("delete successfully");
+        res.render("home.ejs", {
+            posts : posts,
+        });
+    }
+    
 })
 
 app.listen(port, ()=>{
