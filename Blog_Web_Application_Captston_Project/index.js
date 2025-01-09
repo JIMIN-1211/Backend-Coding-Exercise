@@ -7,11 +7,6 @@ const port = 3000;
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(express.static("public"));
 
-var editPost;
-
-app.get("/", (req, res)=>{
-    res.render("login.ejs");
-});
 
 app.get("/home", (req, res)=>{
     res.render("home.ejs", {
@@ -35,24 +30,37 @@ app.get("/newPost", (req, res)=>{
     res.render("newPost.ejs");
 });
 
-app.get("/edit", (req, res)=>{
-    var editId = req.query.id;
+app.get("/edit/:id", (req, res)=>{
+    var editId = req.params.id;
 
     res.render("edit.ejs", {
         post : posts[editId],
     });
 });
 
-app.patch("/home", (req, res)=>{
-    posts[req.query.id].title = req.body.title;
-    posts[req.query.id].content = req.body.content;
+app.post("/edit/:id", (req, res)=>{
+    const postIndex = posts.findIndex(post => post.id === parseInt(req.params.id));
+    console.log(postIndex);
+    console.log(posts);
+    if (postIndex !== -1) {
+        posts[postIndex].title = req.body.title;
+        posts[postIndex].content = req.body.content;
+        console.log("edit successfully!");
+        res.render("home.ejs", {
+            posts: posts,
+        })
+    }
+});
 
+app.post("/delete/:id", (req, res)=>{
+    var deleteId = req.params.id;
+    posts.splice(deleteId, 1);
+    console.log(posts);
+    console.log("delete successfully");
     res.render("home.ejs", {
         posts : posts,
     });
-
-    console.log(posts);
-});
+})
 
 app.listen(port, ()=>{
     console.log(`Listening on port ${port}`);
