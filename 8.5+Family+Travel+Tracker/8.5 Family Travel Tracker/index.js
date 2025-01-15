@@ -40,17 +40,18 @@ async function checkVisisted() {
 
 async function getCurrentUser() {
   const result = await db.query("SELECT * FROM users");
-  const users = result.rows;
+  users = result.rows;
   return users.find(user=>user.id == currentUserId);
 }
 app.get("/", async (req, res) => {
   const countries = await checkVisisted();
   const currentUser = await getCurrentUser();
+  // const users = await db.query("SELECT * FROM users");
   console.log(currentUser);
   res.render("index.ejs", {
     countries: countries,
     total: countries.length,
-    users: users,
+    users: users, //users.rows,
     color: currentUser.color,
   });
 });
@@ -67,8 +68,8 @@ app.post("/add", async (req, res) => {
     const countryCode = data.country_code;
     try {
       await db.query(
-        "INSERT INTO visited_countries (country_code) VALUES ($1)",
-        [countryCode]
+        "INSERT INTO visited_countries (country_code, user_id) VALUES ($1, $2)",
+        [countryCode, currentUserId]
       );
       res.redirect("/");
     } catch (err) {
@@ -102,10 +103,11 @@ app.post("/new", async (req, res) => {
   const name = req.body.name;
   const color = req.body.color;
   try{
-    const result = await db.query("INSERT INTO users (name, color) VALUES ($1, $2)", 
+    const result = await db.query("INSERT INTO users (name, color) VALUES ($1, $2) RETURNING id", 
       [name, color]
     );
-    console.log(result.rows);
+    console.log(result);
+    currentUserId = result.rows;
     res.redirect("/");
   } catch (err) {
     console.log(err);
