@@ -9,9 +9,9 @@
 // npm run dev
 // to launch your react project in your browser
 import React from "react";
-import ReactDOM from "react-dom";
-
-ReactDOM.render(
+import {createRoot} from "react-dom/client";
+const root = createRoot(document.getElementById("root"));
+root.render(
     <div>
         <h1>My Favourite Foods</h1>
         <ul>
@@ -19,6 +19,5 @@ ReactDOM.render(
             <li>Jamon</li>
             <li>Noodles</li>
         </ul>
-    </div>, 
-    document.getElementById("root")
+    </div>
 );
